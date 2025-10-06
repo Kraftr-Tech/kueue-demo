@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  generateName: kueue-sleep-
+  namespace: org-b
+  labels:
+    type: simple-queue
+    organization: org-b
+    kueue.x-k8s.io/queue-name: simple-local-queue-org-b
+spec:
+  containers:
+    - args:
+        - 300s
+      image: gcr.io/k8s-staging-perf-tests/sleep:latest
+      imagePullPolicy: Always
+      name: dummy-job
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 126Mi
+        requests:
+          cpu: 1000m
+          memory: 126Mi
+  restartPolicy: Never
