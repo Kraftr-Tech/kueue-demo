@@ -1,0 +1,22 @@
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: high-availability-with-premption-cluster-queue
+spec:
+  namespaceSelector: {} # Available to all namespaces
+  cohort: jobs-cohort-with-premption
+  queueingStrategy: BestEffortFIFO # Default queueing strategy
+  preemption:
+    reclaimWithinCohort: Any # Reclain cpu capacity from other queue
+  resourceGroups:
+    - coveredResources: ["cpu", "memory"]
+      flavors:
+        - name: "default-flavor"
+          resources:
+            - name: "cpu"
+              nominalQuota: "4"
+              lendingLimit: "4"
+            - name: "memory"
+              nominalQuota: 4Gi
+              lendingLimit: 1Gi

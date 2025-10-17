@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  generateName: low-availability-
-  namespace: org-b
+  generateName: high-availability-with-premption-
+  namespace: org-a
   labels:
-    type: cohort
-    organization: org-b
-    kueue.x-k8s.io/queue-name: low-availability-local-queue-org-b
+    type: cohort-with-preemption
+    organization: org-a
+    kueue.x-k8s.io/queue-name: high-availability-with-premption-local-queue-org-a
 spec:
   containers:
     - args:

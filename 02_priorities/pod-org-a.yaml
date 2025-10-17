@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  generateName: kueue-sleep-
+  generateName: high-priority-
   namespace: org-a
   labels:
     type: priority

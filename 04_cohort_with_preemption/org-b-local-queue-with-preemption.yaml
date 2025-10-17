@@ -1,0 +1,8 @@
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  namespace: org-b # LocalQueue under org-b namespace
+  name: low-availability-with-premption-local-queue-org-b
+spec:
+  clusterQueue: low-availability-with-premption-cluster-queue # Point to the low ClusterQueue

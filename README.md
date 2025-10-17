@@ -142,3 +142,46 @@ done
 ```shell
 kubectl delete po -l type=cohort -A
 ```
+
+## Cohort with preemption
+
+### Create cohort
+```shell
+kubectl apply -f 04_cohort_with_preemption/jobs-cohort-with-preemption.yaml
+kubectl get cohort
+```
+
+### Create cluster queues
+```shell
+kubectl apply -f 04_cohort_with_preemption/high-availability-with-preemption-cluster-queue.yaml
+kubectl apply -f 04_cohort_with_preemption/low-availability-with-preemption-cluster-queue.yaml
+kubectl get cq
+```
+
+### Create local queues
+```shell
+kubectl apply -f 04_cohort_with_preemption/org-a-local-queue-with-preemption.yaml
+kubectl apply -f 04_cohort_with_preemption/org-b-local-queue-with-preemption.yaml
+kubectl get lq -A
+```
+
+### Create pods
+```shell
+for i in {1..7}; do
+kubectl create -f 04_cohort_with_preemption/pod-org-b.yaml
+done
+sleep 10s
+for i in {1..6}; do
+kubectl create -f 04_cohort_with_preemption/pod-org-a.yaml
+done
+sleep 15s
+for i in {1..2}; do
+kubectl create -f 04_cohort_with_preemption/pod-org-a.yaml
+kubectl create -f 04_cohort_with_preemption/pod-org-b.yaml
+done
+```
+
+### Clean
+```shell
+kubectl delete po -l type=cohort-with-preemption -A
+```
